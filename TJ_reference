@@ -1,0 +1,34 @@
+show alias
+Exec mode aliases:
+  h                     help
+  lo                    logout
+  p                     ping
+  r                     resume
+  s                     show
+  u                     undebug
+  un                    undebug
+  w                     where
+  bp                    show ip int brief | ex una
+  sr                    show ip route
+  cn                    show cdp nei
+  sp                    show ip protocols
+
+
+ATM virtual circuit configuration mode aliases:
+  vbr                   vbr-nrt
+
+
+Two rules of routing:
+Rule 1: PING DIKIT, only direct neighbors ping / connect
+devices will ping if same wire! or same vlan
+
+Rule 2: to PING NOT DIKIT: you need routing!!!
+
+
+Access 
+switchport mode access
+switchport access vlan nn
+
+
+!!clear ip add dhcp
+clear ip dhcp binding *
