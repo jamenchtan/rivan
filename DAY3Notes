@@ -96,14 +96,35 @@ Para maging master ka sa routing, dapat pakilala ka bilang IM.BODSS
 
 I-IS-IS CCIE Level
 M-MPLS (CCNP Level)
+
 . ----> Boundaries mo muna below
+--------------------------------------------------- Dynamic routing
+
 B - BGP (Border Gateway Protocol) (CCNP Level ito per hinahagingan na sa Job requirement)
 O - OSPG (Open shortest path first)
 D - D'EIGRP (Enhance Interior Gateway Routing protocol)
+------------------------------------------------- Static Routing
 S - Static
 S - Default Static (STUB Routing)
 
 
+sh ip route - check routing
+no ip routing  - erase all config IP routing
+ip routing
+
+
+Best practice before to configure routing, know the 2 rules of pingables
+1. PING = DIKIT
+2. ROUTE not DIKIT
+
+!STATIC ROUTING
+Recipe: ip route <not directly connected network IP> <Subnetmask of not directly connected> <Host IP of next hop>
+
+
+
+
+CALYE
+ROUTE
 
 
 
