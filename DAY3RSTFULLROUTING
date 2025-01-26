@@ -47,8 +47,90 @@ no shut
 end
 
 !!CISCO Routing Protocols
+=========================================
+!! r4 -> r2
+@r4
+conf t 
+ip route 10.1.1.4 255.255.255.252 10.1.1.9
+
+@r2
+conf t
+ip route 10.1.1.8 255.255.255.252 10.1.1.6
 
 
+========================================
+
+!! r3 -> r1
+@r3
+conf t
+ip route 10.1.1.0 255.255.255.252 10.1.1.5
+do ping 10.1.1.1
+
+@r1
+conf t
+ip route 10.1.1.4 255.255.255.252 10.1.1.2
+do ping 10.1.1.6
+=========================================
+
+!!r4 -> r1
+@r4
+conf t
+ip route 10.1.1.0 255.255.255.252 10.1.1.9
+do ping 10.1.1.1
+
+@r1
+conf t
+ip route 10.1.1.8 255.255.255.252 10.1.1.2
+do ping 10.1.1.10
+
+
+!! DYNAMIC ROUTING (EIGRP - OSPB - BGP)
+
+!Clear Static Routes for OPSF use later
+conf t
+no ip routing
+ip routing
+end
+
+!configure EIGRP
+!- the best dynamic routing protocol
+!- Administrative distance of 90
+!- Cisco proprietary (for CISCO Use only)
+
+@D1
+!!kunin lahat ng Calye sa network
+conf t
+router eigrp 100
+       no auto-summary
+       network 10.1.4.4
+       network 10.2.1.0
+       network 10.2.2.0
+       network 192.168.1.128
+end
+
+
+@D2
+!!kunin lahat ng Calye sa network
+conf t
+router eigrp 100
+       no auto-summary
+       network 10.1.4.8
+       network 10.2.1.0
+       network 10.2.2.0
+       network 192.168.1.128
+end
+
+@R4
+conf t
+router eigrp 100
+       no auto-summary
+       network 10.1.4.4
+       network 10.1.4.8
+end
+
+========================================
+
+ 
 
 
 
