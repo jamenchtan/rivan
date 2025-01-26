@@ -1,0 +1,100 @@
+!implement Day3
+conf t
+int lo1 
+ip add 10.100.10.33 255.255.255.224
+int lo2 
+ip add 10.100.10.65 255.255.255.224
+int lo3 
+ip add 10.100.10.97 255.255.255.224
+int lo4 
+ip add 10.100.10.129 255.255.255.224
+int lo5 
+ip add 10.100.10.161 255.255.255.224
+int lo6 
+ip add 10.100.10.193 255.255.255.224
+int lo7 
+ip add 10.100.10.225 255.255.255.224
+
+
+!!ipv6 implementation
+conf t 
+ipv6 unicast-routing
+int lo101 
+ipv6 add face:cafe:fafa:fefe::1234/70
+int lo102 
+ipv6 add face:cafe:fafa:fefe:0400::1234/70
+int lo103
+ipv6 add face:cafe:fafa:fefe:0800::1234/70
+int lo104
+ipv6 add face:cafe:fafa:fefe:0c00::1234/70
+int lo105
+ipv6 add face:cafe:fafa:fefe:1000::1234/70
+int lo106
+ipv6 add face:cafe:fafa:fefe:1400::1234/70
+int lo107
+ipv6 add face:cafe:fafa:fefe:1800::1234/70
+int lo108
+ipv6 add face:cafe:fafa:fefe:1c00::1234/70
+int lo109
+ipv6 add face:cafe:fafa:fefe:2000::1234/70
+int lo110
+ipv6 add face:cafe:fafa:fefe:2400::1234/70
+
+
+!!Test
+!!22 offices /64 , abde:babe:fade:f0f0::/64
+conf t 
+ipv6 unicast-routing
+int lo201
+ipv6 add abcd:babe:fade:f0f0::8888/69
+int lo202
+ipv6 add abcd:babe:fade:f0f0:0800::8888/69
+int lo203
+ipv6 add abcd:babe:fade:f0f0:1000::8888/69
+int lo204
+ipv6 add abcd:babe:fade:f0f0:1800::8888/69
+int lo205
+ipv6 add abcd:babe:fade:f0f0:2000::8888/69
+int lo206
+ipv6 add abcd:babe:fade:f0f0:2800::8888/69
+int lo207
+ipv6 add abcd:babe:fade:f0f0:3000::8888/69
+int lo208
+ipv6 add abcd:babe:fade:f0f0:3800::8888/69
+int lo209
+ipv6 add abcd:babe:fade:f0f0:4000::8888/69
+int lo210
+ipv6 add abcd:babe:fade:f0f0:4800::8888/69
+int lo211
+ipv6 add abcd:babe:fade:f0f0:5000::8888/69
+
+
+!!REMOVE LOOPBACKS QUICKY
+!! removing loopbacks
+!!  2 time paste this script , run once
+config t
+no event manager applet siraloop
+event manager applet siraloop
+ event none
+ action 1.0 puts "How many Loopback interfaces do you wish to remove?"
+ action 1.1 puts nonewline "> "
+ action 1.2 gets num 
+ action 2.0 cli command "enable"
+ action 2.1 cli command "conf t"
+ action 3.0 set i "1"
+ action 3.1 while $i le $num
+ action 3.2  cli command "no interface Loopback $i"
+ action 3.4  increment i 1
+ action 3.5 end
+ action 4.0 cli command "end"
+ end
+
+event manager runs siraloop
+
+
+
+
+
+
+
+
