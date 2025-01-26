@@ -271,6 +271,48 @@ end
 
 
 
+!!BGP Messages - not for CCNA
+!!(NOKU Packets: Notification, Open, Keep alive, UpdaTe)
+!! clear ip bgp * soft !updates BGP Advertisments upon modification of BGP Attributes
+
+ROUTE REDISTRIBUTION
+(by default, different routing protocols cannot get along each other)
+
+@R1 (For BGP and OSPF)
+confi t
+router ospf 1
+default-information originate always
+end
+
+@R4 (for OSPF and EIGRP)
+!pasok eigrp kay OSPF
+confi t
+router ospf 1
+redistribute eigrp 100 subnets
+exit
+
+!pasok OSPF kay EIGRP (na matapobre)
+router eigrp 100
+redistribute ospf 1 metric 1544 2000 255 1 1500
+end
+
+
+
+@P1 (!ping muna si kadikit)
+!Default Static
+conf t
+ip route 0.0.0.0 0.0.0.0 10.2.1.1
+end
+
+
+@P2 (!ping muna si kadikit)
+!Default Static
+conf t
+ip route 0.0.0.0 0.0.0.0 10.2.2.2
+end
+
+
+
 
  
 
