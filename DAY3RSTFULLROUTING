@@ -1,0 +1,54 @@
+!first prep. Setup DHCP for D1 and D2 
+
+@d1
+conf t
+ip dhcp excluded-add 10.2.1.1 10.2.1.99
+ip dhcp excluded-add 10.2.1.200 10.2.1.254
+ip dhcp pool vlan10
+ network 10.2.1.0 255.255.255.0
+ default-router 10.2.1.254
+end
+
+@d2
+conf t
+ip dhcp excluded-add 10.2.2.1 10.2.2.99
+ip dhcp excluded-add 10.2.2.200 10.2.1.254
+ip dhcp pool vlan10
+ network 10.2.2.0 255.255.255.0
+ default-router 10.2.2.254
+end
+
+@A1
+conf t 
+int e0/0
+switchport mode access
+switchport access vlan 10
+end
+
+@A2
+conf t 
+int e1/0
+switchport mode access
+switchport access vlan 20
+end
+
+@P1
+conf t
+int e0/0
+ip add dhcp
+no shut
+end
+
+@P2
+conf t
+int e1/0
+ip add dhcp
+no shut
+end
+
+!!CISCO Routing Protocols
+
+
+
+
+
