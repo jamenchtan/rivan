@@ -91,6 +91,18 @@ event manager applet siraloop
 
 event manager runs siraloop
 
+CISCO ROUTING PROTOCOLS
+Para maging master ka sa routing, dapat pakilala ka bilang IM.BODSS
+
+I-IS-IS CCIE Level
+M-MPLS (CCNP Level)
+. ----> Boundaries mo muna below
+B - BGP (Border Gateway Protocol) (CCNP Level ito per hinahagingan na sa Job requirement)
+O - OSPG (Open shortest path first)
+D - D'EIGRP (Enhance Interior Gateway Routing protocol)
+S - Static
+S - Default Static (STUB Routing)
+
 
 
 
