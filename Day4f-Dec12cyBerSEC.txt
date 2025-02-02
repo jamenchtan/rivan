@@ -335,7 +335,7 @@ tcp,udp,icmp,IP     Any      web310/11
 Config t
 service timestamps log datetime
 service timestamps debug datetime
-logging 10.m.1.10
+logging 10.12.1.10
 logging trap 5
 NO IP access-list Extended FWP1
 IP access-list Extended FWP1
@@ -355,28 +355,59 @@ end
 
 TAKASSSSSSSSG:  control shift 6 bitaw X
 
-ex.2: you are the admin for pogo sites:
-www.web310.com open only ssh,dns, http
-www.web311.com open only telnet, ssh, https, ping/icmp => 7lines
+ex.2: you are the admin for pogo sites: WAF2
+www.web310.com open only ssh22,dns53, http80
+www.web311.com open only telnet23, ssh22, https443, ping/icmp => 7lines
   GOLDEN  FIREWALL FORMULA:  paloalto,fortinet,cisco,checkpoint.
    protocol         hacker    victim       port
 config t
-NO IP access-list Extended FWP2
-IP access-list Extended FWP2
- Permit tcp Any host www.web310.com eq __ log
- Permit tcp Any host www.web310.com eq __ log
- Permit tcp Any host www.web310.com eq __ log
- Permit tcp Any host www.web311.com eq __ log
- Permit tcp Any host www.web311.com eq __ log
- Permit tcp Any host www.web311.com eq __ log 
- Permit ___  Any host www.web311.com log
+NO IP access-list Extended WAF2
+IP access-list Extended WAF2
+ Permit tcp Any host www.web310.com eq 22 log
+ Permit tcp Any host www.web310.com eq 53 log
+ Permit tcp Any host www.web310.com eq 80 log
+ Permit tcp Any host www.web311.com eq 23 log
+ Permit tcp Any host www.web311.com eq 22 log
+ Permit tcp Any host www.web311.com eq 443 log 
+ Permit icmp  Any host www.web311.com log
  Int Gi 3
-  ip access-group FWP2 in
+  ip access-group WAF2 in
 REMOVE FIREWALL:
 CONfig t
  Int Gi 3
-  ip access-group FWP2 in
+ no ip access-group WAF2 in
 end
+
+config t
+NO IP access-list Extended WAF3
+IP access-list Extended WAF3
+ Permit tcp Any host www.web310.com eq 22 log
+ Permit tcp Any host www.web310.com eq 80 log
+  Permit tcp Any host www.web311.com eq 443 log 
+ Permit icmp  Any host www.web311.com log
+ Int Gi 3
+  ip access-group WAF3 in
+
+REMOVE FIREWALL:
+CONfig t
+ Int Gi 3
+  ip access-group WAF3 in
+end
+
+config t
+NO IP access-list Extended PRANING3
+IP access-list Extended PRANING3
+ Permit tcp Any host www.web310.com eq 443 log
+ Permit icmp  Any host www.web311.com log
+ Int Gi 3
+  ip access-group PRANING3 in
+
+
+
+
+
+
+
 
 ex.3: you are the admin for SUPERPRANING pogo sites:
 www.web310.com open only 443
@@ -391,23 +422,23 @@ Int Gi 3
 
 CYBERSECURITY TASK7: PROTECTING YOUR CORPORATE WEB APPS.
 EX.1 CREATE A FIREWALL POLICY NAMED Policy1 TO OPEN
-WWW.WEB8.COM HAS HTTP AND HTTPS AS OPEN
-WWW.WEB9.COM HAS SSH AND DNS OPEN
+WWW.WEB310.COM HAS HTTP AND HTTPS AS OPEN
+WWW.WEB311.COM HAS SSH AND DNS OPEN
 formula:       PROTOCOL    HACKER    VICTIM     PORT:
 config t
 no ip access-list extended Policy1
 ip access-list extended Policy1
-Permit tcp any host www.web8.com eq 80 log
-Permit tcp any host www.web8.com eq 443 log
-Permit tcp any host www.web9.com eq 22 log
-Permit tcp any  host www.web9.com eq 53 log
+Permit tcp any host www.web310.com eq 80 log
+Permit tcp any host www.web310.com eq 443 log
+Permit tcp any host www.web311.com eq 22 log
+Permit tcp any  host www.web311.com eq 53 log
 Interface Gi 3
  ip access-group Policy1 in
  do sh ip access-list Policy1
 
 EX.2 CREATE A FIREWALL POLICY NAMED PROWEBAPP2 TO OPEN
-WWW.WEB8.COM HAS HTTPS,PING AS OPEN
-WWW.WEB9.COM HAS HTTPS,PING OPEN
+WWW.WEB310.COM HAS HTTPS,PING AS OPEN
+WWW.WEB311.COM HAS DNS,PING OPEN
 formula:       PROTOCOL      HACKER      VICTIM       PORT:
        tcp, udp, icmp, IP    any       web8,web9
 Ports: 
@@ -421,11 +452,15 @@ Ports:
 79/tcp  open  finger
 80/tcp  open  http
 443/tcp open  https
+
+
 config t
 no ip access-list extended PROWEBAPP2
 ip access-list extended PROWEBAPP2
-Permit tcp any host www.web8.com eq ___ log
-Permit tcp any host www.web9.com eq ___ log
+Permit tcp any host www.web310.com eq 443 log
+Permit tcp any host www.web311.com eq 53 log
+Permit icmp  Any host www.web310.com log
+Permit icmp  Any host www.web311.com log
 Interface Gi 3
  ip access-group PROWEBAPP2 in
  do sh ip access-list PROWEBAPP1
@@ -495,6 +530,8 @@ Interface Gi 3
  ip access-group LASTFWP3 in
  do sh ip access-list LASTFWP3
 
+
+
 TASK8: CONFIGURING CISCO NETWORK SERVICES:
 NETWORK TIME PROTOCOL OR NTP 
 is a layer 7 protocol using UDP 123
@@ -503,6 +540,14 @@ config t
 ntp server 216.239.35.8
 end
 show ntp associations
+!! HOW to make CISCO Device a master time Server : TagaBigay ng ORAS.
+config t
+ntp master 1
+ntp update-calendar
+end
+
+
+
 GIVE IP ADDRESS TO LINUX BLDGONE AND BLDGTWO:
 sudo su
 bldg1:
