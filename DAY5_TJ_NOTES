@@ -1,0 +1,106 @@
+!! DAY 5 Notes
+Switch / Cisco Switch
+Office switch - Cisco Catalyst 3560 series PoE-12
+CUCM - Cisco 1800 Series
+Edge Router - Cisco 4321
+
+Function of CISCO Switch (Managed)
+1. PoE - PowerOver Ethernet 802.3af
+2. SVI - Switch VLAN Interface) dito nag uusap ang mga VLAN
+3. DHCP Server (Dynamic Host Configuraiton Protocol) - Taga Bigay IP (DORA - Discover Offer Request Acknowledge)
+4. VLAN Creation and Management
+5. Remembering MAC Address - SMAC
+
+May libreng VLAN ang CISCO switch - VLAN 1
+
+access port tawag sa port ng mga port switch (LEFT part ng switch)
+trunk port - Kapwa switch kinakabit dito
+
+
+
+ancible
+root C1sc0123
+
+!! Get ip address
+ip addr 
+
+
+
+//to enable SSH 
+conf t
+ip domain-name ccna.com
+username teejay privilege 15 secret C1sco123
+crypto key generate rsa modulus 2048
+ip ssh version 2
+ ling vty 0 14
+ transport input ssh telnet
+ login local
+
+
+
+
+//edit on yml file
+---
+  - name: MORELOOPS
+    hosts: VPNPH
+    gather_facts: no
+    become: yes
+
+    tasks:
+      - name: LOOPPH
+        ios_command:
+          commands:
+            - confi t
+            - int lo 75
+            - ip add 75.75.75.75 255.255.255.255
+        vars:
+          ansible_network_os: ios
+
+  - name: MORELOOPS
+    hosts: VPNJP
+    gather_facts: no
+    become: yes
+
+    tasks:
+      - name: LOOPJP
+        ios_command:
+          commands:
+            - confi t
+            - int lo 80
+            - ip add 80.80.80.80 255.255.255.255
+        vars:
+          ansible_network_os: ios
+
+  - name: MORELOOPS
+    hosts: COREBABA
+    gather_facts: no
+    become: yes
+
+    tasks:
+      - name: COREBABA
+        ios_command:
+          commands:
+            - confi t
+            - int lo 200
+            - ip add 200.200.200.200 255.255.255.255
+        vars:
+          ansible_network_os: ios
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
