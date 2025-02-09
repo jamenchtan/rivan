@@ -350,6 +350,7 @@ spanning-tree BackBoneFast
 spanning-tree portfast bpduguard default
 Int Range fa0/1-8
    spanning-tree Portfast
+
 @BABA/d2/a1/a2:
 config t
 spanning-tree Mode Rapid-pvst
@@ -420,7 +421,6 @@ do sh spanning-tree mst configuration
 
 TASK14: MAKE YOUR OWN SUPERMAN BOSSING:
 
-
 @Taas: Make Taas RootBridge again:/d1
 config t
 spanning-tree mst 0 root primary
@@ -478,6 +478,7 @@ NO switchport port-security
 shut
 no shut
 
+
 TASK16: FHRP:First Hop Redundancy Protocol:
         " The Rich Kid Problem!" = richKidSolution.
 HSRP: hot standby routing protocol: all Cisco SW:
@@ -490,10 +491,11 @@ config t
 hostname PLDT-ITO
 Track 1 Int gi 0/1 line-protocol
 Int vlan 1
-standby 1 ip 10.__.1.6
+standby 1 ip 10.12.1.6
 standby 1 preempt
 standby 1 Priority 150
 standby 1 Track 1 decrement 60
+end
 
 @D1 para realworld:
 config t
@@ -508,7 +510,7 @@ COREBABA/GLOBE:
 config t
 hostname GLOBE-ITO
 Int vlan 1
-standby 1 ip 10.__.1.6
+standby 1 ip 10.12.1.6
 standby 1 preempt
 standby 1 Priority 100
 end
